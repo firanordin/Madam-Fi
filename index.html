@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madam Fi — DBM30263 Socratic Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="chat-container">
+        
+        <!-- Header Section -->
+        <header class="chat-header">
+            <h1>Madam Fi</h1>
+            <p>Politeknik Malaysia — DBM30263 (Statistics & Probability)</p>
+        </header>
+
+        <!-- Chat Output Box -->
+        <main class="chat-box" id="chat-box">
+            <!-- Welcome Message -->
+            <div class="message assistant">
+                <p>Hello! I'm <strong>Madam Fi</strong>, your Socratic study companion for DBM30263. What problem or topic are we working on today? Remember to share the question, and we'll break it down step-by-step!</p>
+            </div>
+        </main>
+
+        <!-- Input Section -->
+        <footer class="chat-input-area">
+            <form id="chat-form">
+                <input 
+                    type="text" 
+                    id="user-input" 
+                    placeholder="Ask a DBM30263 question or show your work..." 
+                    required 
+                    autocomplete="off"
+                >
+                <button type="submit" id="send-btn">Send</button>
+            </form>
+        </footer>
+
+    </div>
+
+    <!-- Main Logic Script -->
+    <script src="script.js"></script>
+</body>
+</html>
