@@ -1,60 +1,178 @@
-/* Overlay Kad Pengenalan Diri */
-#onboarding-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+/* Reset & Asas Halaman */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f0f2f5;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  height: 100vh;
 }
 
-.onboarding-card {
+/* Bekas Utama Chatbot (Mirip ChatGPT / WhatsApp Web) */
+#chat-container {
+  width: 100%;
+  max-width: 480px;
+  height: 90vh;
   background: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  max-width: 420px;
-  width: 90%;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  font-family: sans-serif;
-}
-
-.form-group {
-  margin-bottom: 15px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-.form-group label {
-  font-size: 0.9em;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
+/* Header Chatbot */
+#chat-header {
+  background-color: #0084ff;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.form-group input, .form-group select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1em;
+.header-info h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
-#start-btn {
-  width: 100%;
+.header-info p {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+#student-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+/* Ruang Mesej (Sembang) */
+#chat-messages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f9f9fb;
+}
+
+/* Gelembung Mesej (Bubbles) */
+.message {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+/* Mesej daripada Madam Fi (Kiri) */
+.message.assistant {
+  align-self: flex-start;
+  background-color: #e4e6eb;
+  color: #050505;
+  border-bottom-left-radius: 4px;
+}
+
+/* Mesej daripada Pelajar (Kanan) */
+.message.user {
+  align-self: flex-end;
+  background-color: #0084ff;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* Ruang Input & Dropdown */
+#chat-input-area {
   padding: 12px;
-  background-color: #007bff;
+  background: #ffffff;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Container Dropdown Bahasa */
+#language-dropdown-container {
+  background: #f0f8ff;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #0084ff;
+  text-align: center;
+}
+
+#language-dropdown-container label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #0084ff;
+  margin-bottom: 5px;
+}
+
+#language-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+/* Baris Taip & Butang Hantar */
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+#user-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 24px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+#user-input:focus {
+  border-color: #0084ff;
+}
+
+#send-btn {
+  background-color: #0084ff;
   color: white;
   border: none;
-  border-radius: 6px;
+  padding: 10px 18px;
+  border-radius: 24px;
   font-weight: bold;
-  font-size: 1em;
   cursor: pointer;
   transition: background 0.2s;
 }
 
-#start-btn:hover {
-  background-color: #0056b3;
+#send-btn:hover {
+  background-color: #006bce;
+}
+
+#send-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Responsif untuk Skrin Telefon */
+@media (max-width: 500px) {
+  body {
+    align-items: flex-start;
+  }
+  #chat-container {
+    height: 100vh;
+    border-radius: 0;
+  }
 }
