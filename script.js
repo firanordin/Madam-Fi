@@ -1,5 +1,5 @@
 // 1. URL Cloudflare Worker Anda
-const WORKER_URL = "https://madam-fi-backend.firanordin.workers.dev"; 
+const WORKER_URL = "https://silent-cake-5518.fira-ukm.workers.dev"; 
 
 // 2. Elemen UI berdasarkan HTML sebenar anda
 const chatForm = document.getElementById("chat-form");
