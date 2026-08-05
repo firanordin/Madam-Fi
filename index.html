@@ -1,47 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madam Fi — DBM30263 Socratic Assistant</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Madam Fi - DBM30263 Tutor</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Main Container -->
-    <div class="chat-container">
-        
-        <!-- Header Section -->
-        <header class="chat-header">
-            <h1>Madam Fi</h1>
-            <p>Politeknik Malaysia — DBM30263 (Statistics & Probability)</p>
-        </header>
+  <!-- Modal / Kad Onboarding (Muncul di Awal Sesi) -->
+  <div id="onboarding-overlay">
+    <div class="onboarding-card">
+      <h2>Selamat Datang / Welcome! 🎓</h2>
+      <p>Sila lengkapkan maklumat anda sebelum memulakan sesi bersama <strong>Madam Fi</strong>.</p>
+      
+      <form id="onboarding-form">
+        <!-- Input Nama (Short Answer) -->
+        <div class="form-group">
+          <label for="student-name-input">Nama Pelajar / Student Name:</label>
+          <input type="text" id="student-name-input" placeholder="Contoh: Muhammad Ali bin Ahmad" required>
+        </div>
 
-        <!-- Chat Output Box -->
-        <main class="chat-box" id="chat-box">
-            <!-- Welcome Message -->
-            <div class="message assistant">
-                <p>Hello! I'm <strong>Madam Fi</strong>, your Socratic study companion for DBM30263. What problem or topic are we working on today? Remember to share the question, and we'll break it down step-by-step!</p>
-            </div>
-        </main>
+        <!-- Input Politeknik (Short Answer / Text) -->
+        <div class="form-group">
+          <label for="student-poly-input">Politeknik:</label>
+          <input type="text" id="student-poly-input" placeholder="Contoh: Politeknik Ungku Omar (PUO)" required>
+        </div>
 
-        <!-- Input Section -->
-        <footer class="chat-input-area">
-            <form id="chat-form">
-                <input 
-                    type="text" 
-                    id="user-input" 
-                    placeholder="Ask a DBM30263 question or show your work..." 
-                    required 
-                    autocomplete="off"
-                >
-                <button type="submit" id="send-btn">Send</button>
-            </form>
-        </footer>
+        <!-- Dropdown Pilihan Bahasa -->
+        <div class="form-group">
+          <label for="language-select">Bahasa Pilihan / Preferred Language:</label>
+          <select id="language-select" required>
+            <option value="" disabled selected>-- Pilih Bahasa / Select Language --</option>
+            <option value="Bahasa Melayu">Bahasa Melayu</option>
+            <option value="English">English</option>
+          </select>
+        </div>
 
+        <button type="submit" id="start-btn">Mula Belajar / Start Learning 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Ruang Utama Chat (Hanya aktif selepas form dihantar) -->
+  <div id="chat-container">
+    <div id="chat-header">
+      <h2>Madam Fi (DBM30263)</h2>
+      <div id="student-badge" style="display: none;">
+        👤 <span id="display-name"></span> | 🏫 <span id="display-poly"></span>
+      </div>
     </div>
 
-    <!-- Main Logic Script -->
-    <script src="script.js"></script>
+    <div id="chat-messages">
+      <!-- Mesej akan dipaparkan di sini -->
+    </div>
+
+    <div id="chat-input-area">
+      <input type="text" id="user-input" placeholder="Taip soalan anda di sini..." disabled>
+      <button id="send-btn" disabled>Hantar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
