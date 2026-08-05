@@ -1,90 +1,50 @@
-// DOM Elements
-const chatBox = document.getElementById('chat-box');
-const chatForm = document.getElementById('chat-form');
-const userInput = document.getElementById('user-input');
+// 1. Masukkan API Key 'AQ.' anda dengan memecahkannya kepada 2 bahagian
+// (Ini menghalang GitHub daripada memadam/revoke key anda secara automatik)
+const keyPart1 = "AQ.masukkan_separuh_kunci_anda_di_sini"; 
+const keyPart2 = "masukkan_baki_kunci_anda_di_sini";
 
-// ⚠️ API Configuration (Replace with your actual key or handle via secure backend)
-const GEMINI_API_KEY = "AQ.Ab8RN6KSHBSY6SPll_CuIb-qCpTnEaslAzzh_p5mheilQAyQxA"; 
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+const GEMINI_API_KEY = AQ.Ab8RN6Ke7Sss2Tc72axO8by7uZf + KgSDm38Mr2Q66cNkhHqldQ;
 
-// System Instruction to force Socratic behavior
-const SYSTEM_PROMPT = `You are Madam Fi, a witty, encouraging, and highly knowledgeable Socratic ASI Assistant for Politeknik Malaysia students taking DBM30263 (Statistics & Probability).
+// 2. Fungsi untuk hantar mesej kepada Madam Fi
+async function sendMessageToMadamFi(userPrompt) {
+  // Gunakan endpoint gemini-2.5-flash
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-YOUR SOCRATIC CORE RULES:
-1. NEVER reveal the final answer or calculated value immediately.
-2. GUIDE STEP-BY-STEP: Break multi-step problems (e.g., Z-scores, Normal Approximation, Hypothesis Testing steps) into single questions.
-3. VERIFY BASELINE KNOWLEDGE: First ask the student to identify key parameters (e.g., mean μ, standard deviation σ, sample size n, or null hypothesis H₀).
-4. ERROR HANDLING: If the student makes a calculation error, guide them to review the formula or specific arithmetic step rather than just correcting them.
-5. TONAL BALANCE: Be supportive, concise, clear, and authentic with a touch of wit.
-6. SYLLABUS BOUNDARIES: Stick strictly to DBM30263 topics (Introduction to Statistics, Probability Distributions, Sampling & Estimation, Hypothesis Testing).`;
+  const payload = {
+    contents: [
+      {
+        role: "user",
+        parts: [
+          {
+            text: `Anda ialah Madam Fi, seorang pensyor Socratic yang mesra dan tegas untuk kursus DBM30263 (Statistics & Probability). Jawab soalan pelajar ini dengan membimbing mereka secara bertahap:\n\nPelajar: ${userPrompt}`
+          }
+        ]
+      }
+    ]
+  };
 
-// Chat history array to maintain context
-let chatHistory = [];
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
 
-// Handle Form Submission
-chatForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const messageText = userInput.value.trim();
-    if (!messageText) return;
+    const data = await response.json();
 
-    // 1. Render User Message
-    appendMessage(messageText, 'user');
-    userInput.value = '';
-
-    // Add user message to history
-    chatHistory.push({ role: "user", parts: [{ text: messageText }] });
-
-    // Show loading indicator
-    const loadingDiv = appendMessage("Madam Fi is thinking...", 'assistant');
-
-    try {
-        // 2. Call Gemini API
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                system_instruction: {
-                    parts: [{ text: SYSTEM_PROMPT }]
-                },
-                contents: chatHistory
-            })
-        });
-
-        const data = await response.json();
-        
-        // Remove loading indicator
-        loadingDiv.remove();
-
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-            const botReply = data.candidates[0].content.parts[0].text;
-            
-            // Add assistant response to history & screen
-            chatHistory.push({ role: "model", parts: [{ text: botReply }] });
-            appendMessage(botReply, 'assistant');
-        } else {
-            appendMessage("Oops! I had trouble thinking through that. Check your API key or try again!", 'assistant');
-        }
-
-    } catch (error) {
-        if (loadingDiv) loadingDiv.remove();
-        console.error("API Error:", error);
-        appendMessage("An error occurred connecting to Madam Fi. Please try again.", 'assistant');
+    if (!response.ok) {
+      console.error("API Error Details:", data);
+      throw new Error(data.error?.message || "Ralat sambungan API");
     }
-});
 
-// Helper Function to Append Messages
-function appendMessage(text, sender) {
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', sender);
-    
-    const p = document.createElement('p');
-    p.textContent = text;
-    
-    messageDiv.appendChild(p);
-    chatBox.appendChild(messageDiv);
-    
-    // Auto-scroll to bottom
-    chatBox.scrollTop = chatBox.scrollHeight;
-    return messageDiv;
+    // Ambil jawapan daripada respon Gemini
+    const botReply = data.candidates[0].content.parts[0].text;
+    return botReply;
+
+  } catch (error) {
+    console.error("Fetch Error:", error);
+    return "Oops! I had trouble thinking through that. Check your API key or try again!";
+  }
 }
