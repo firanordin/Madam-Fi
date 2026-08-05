@@ -1,12 +1,12 @@
 // 1. URL Cloudflare Worker Anda
-const WORKER_URL = "https://madam-fi-backend.firanordin.workers.dev"; // Pastikan URL ini tepat dengan Worker anda
+const WORKER_URL = "https://madam-fi-backend.firanordin.workers.dev"; 
 
-// 2. Elemen UI berdasarkan HTML Madam Fi anda
-const sendBtn = document.getElementById("send-btn");
+// 2. Elemen UI berdasarkan HTML sebenar anda
+const chatForm = document.getElementById("chat-form");
 const userInput = document.getElementById("user-input");
-const chatBox = document.getElementById("chat-box");
+const chatMessages = document.getElementById("chat-messages");
 
-// Fungsi untuk panggil Madam Fi melalui Cloudflare Worker
+// 3. Fungsi panggil Madam Fi melalui Worker
 async function sendMessageToMadamFi(promptText) {
   try {
     const response = await fetch(WORKER_URL, {
@@ -33,8 +33,10 @@ async function sendMessageToMadamFi(promptText) {
   }
 }
 
-// Fungsi untuk paparkan mesej ke dalam skrin borak
+// 4. Fungsi papar mesej pada skrin
 function appendMessage(sender, text) {
+  if (!chatMessages) return;
+
   const msgDiv = document.createElement("div");
   msgDiv.className = `message ${sender}-message`;
   msgDiv.style.margin = "10px 0";
@@ -57,48 +59,38 @@ function appendMessage(sender, text) {
     msgDiv.innerHTML = `<strong>Madam Fi:</strong> ${text}`;
   }
 
-  chatBox.appendChild(msgDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
+  chatMessages.appendChild(msgDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Fungsi utama untuk mengendalikan hantaran mesej
-async function handleSend() {
-  const text = userInput.value.trim();
-  if (!text) return;
+// 5. Acara Hantar Form
+if (chatForm) {
+  chatForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const text = userInput.value.trim();
+    if (!text) return;
 
-  // Papar mesej pengguna
-  appendMessage("user", text);
-  userInput.value = "";
+    // Papar mesej pengguna
+    appendMessage("user", text);
+    userInput.value = "";
 
-  // Papar indikator loading
-  const loadingDiv = document.createElement("div");
-  loadingDiv.id = "loading-indicator";
-  loadingDiv.style.fontStyle = "italic";
-  loadingDiv.style.color = "#6c757d";
-  loadingDiv.style.margin = "8px 0";
-  loadingDiv.innerText = "Madam Fi sedang memikirkan jawapan...";
-  chatBox.appendChild(loadingDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
+    // Indikator loading
+    const loadingDiv = document.createElement("div");
+    loadingDiv.id = "loading-indicator";
+    loadingDiv.style.fontStyle = "italic";
+    loadingDiv.style.color = "#6c757d";
+    loadingDiv.style.margin = "8px 0";
+    loadingDiv.innerText = "Madam Fi sedang memikirkan jawapan...";
+    chatMessages.appendChild(loadingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 
-  // Dapatkan respon dari Madam Fi
-  const reply = await sendMessageToMadamFi(text);
+    // Ambil respon AI
+    const reply = await sendMessageToMadamFi(text);
 
-  // Padam indikator loading dan paparkan jawapan
-  const indicator = document.getElementById("loading-indicator");
-  if (indicator) indicator.remove();
+    // Padam indikator loading & papar jawapan
+    const indicator = document.getElementById("loading-indicator");
+    if (indicator) indicator.remove();
 
-  appendMessage("bot", reply);
-}
-
-// Sambungkan acara Klik & Tekan Enter
-if (sendBtn) {
-  sendBtn.addEventListener("click", handleSend);
-}
-
-if (userInput) {
-  userInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      handleSend();
-    }
+    appendMessage("bot", reply);
   });
 }
