@@ -1,10 +1,10 @@
-// 1. Tampal URL Cloudflare Worker anda di sini
-const WORKER_URL = "https://silent-cake-5518.fira-ukm.workers.dev";
+// 1. URL Cloudflare Worker Anda
+const WORKER_URL = "https://madam-fi-backend.firanordin.workers.dev"; // Pastikan URL ini tepat dengan Worker anda
 
-// 2. Elemen UI
-const chatForm = document.getElementById("chat-form");
+// 2. Elemen UI berdasarkan HTML Madam Fi anda
+const sendBtn = document.getElementById("send-btn");
 const userInput = document.getElementById("user-input");
-const chatMessages = document.getElementById("chat-messages");
+const chatBox = document.getElementById("chat-box");
 
 // Fungsi untuk panggil Madam Fi melalui Cloudflare Worker
 async function sendMessageToMadamFi(promptText) {
@@ -33,56 +33,72 @@ async function sendMessageToMadamFi(promptText) {
   }
 }
 
-// Fungsi untuk papar mesej dalam borak
+// Fungsi untuk paparkan mesej ke dalam skrin borak
 function appendMessage(sender, text) {
   const msgDiv = document.createElement("div");
   msgDiv.className = `message ${sender}-message`;
   msgDiv.style.margin = "10px 0";
-  msgDiv.style.padding = "10px";
-  msgDiv.style.borderRadius = "8px";
+  msgDiv.style.padding = "10px 14px";
+  msgDiv.style.borderRadius = "12px";
+  msgDiv.style.maxWidth = "80%";
   
   if (sender === "user") {
-    msgDiv.style.backgroundColor = "#e3f2fd";
+    msgDiv.style.backgroundColor = "#d1e7dd";
+    msgDiv.style.color = "#0f5132";
+    msgDiv.style.marginLeft = "auto";
     msgDiv.style.textAlign = "right";
     msgDiv.innerHTML = `<strong>Anda:</strong> ${text}`;
   } else {
-    msgDiv.style.backgroundColor = "#f5f5f5";
+    msgDiv.style.backgroundColor = "#f8f9fa";
+    msgDiv.style.color = "#212529";
+    msgDiv.style.marginRight = "auto";
+    msgDiv.style.border = "1px solid #dee2e6";
     msgDiv.style.textAlign = "left";
     msgDiv.innerHTML = `<strong>Madam Fi:</strong> ${text}`;
   }
 
-  chatMessages.appendChild(msgDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  chatBox.appendChild(msgDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Mengendalikan hantaran borak oleh pengguna
-if (chatForm) {
-  chatForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const text = userInput.value.trim();
-    if (!text) return;
+// Fungsi utama untuk mengendalikan hantaran mesej
+async function handleSend() {
+  const text = userInput.value.trim();
+  if (!text) return;
 
-    // Papar mesej pengguna
-    appendMessage("user", text);
-    userInput.value = "";
+  // Papar mesej pengguna
+  appendMessage("user", text);
+  userInput.value = "";
 
-    // Papar indikator "sedang menaip..."
-    const loadingDiv = document.createElement("div");
-    loadingDiv.id = "loading-indicator";
-    loadingDiv.style.fontStyle = "italic";
-    loadingDiv.style.color = "#888";
-    loadingDiv.style.margin = "5px 0";
-    loadingDiv.innerText = "Madam Fi sedang memikirkan jawapan...";
-    chatMessages.appendChild(loadingDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+  // Papar indikator loading
+  const loadingDiv = document.createElement("div");
+  loadingDiv.id = "loading-indicator";
+  loadingDiv.style.fontStyle = "italic";
+  loadingDiv.style.color = "#6c757d";
+  loadingDiv.style.margin = "8px 0";
+  loadingDiv.innerText = "Madam Fi sedang memikirkan jawapan...";
+  chatBox.appendChild(loadingDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
 
-    // Dapatkan jawapan dari API
-    const reply = await sendMessageToMadamFi(text);
+  // Dapatkan respon dari Madam Fi
+  const reply = await sendMessageToMadamFi(text);
 
-    // Padam indikator loading dan papar jawapan Madam Fi
-    const indicator = document.getElementById("loading-indicator");
-    if (indicator) indicator.remove();
-    
-    appendMessage("bot", reply);
+  // Padam indikator loading dan paparkan jawapan
+  const indicator = document.getElementById("loading-indicator");
+  if (indicator) indicator.remove();
+
+  appendMessage("bot", reply);
+}
+
+// Sambungkan acara Klik & Tekan Enter
+if (sendBtn) {
+  sendBtn.addEventListener("click", handleSend);
+}
+
+if (userInput) {
+  userInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
   });
 }
