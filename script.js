@@ -1,4 +1,4 @@
-const WORKER_URL = "https://silent-cake-5518.YOUR-SUBDOMAIN.workers.dev"; // Gantikan URL Worker anda
+const WORKER_URL = "https://silent-cake-5518.fira-ukm.workers.dev"; // Gantikan URL Worker anda
 
 let currentStep = 1; // Step 1: Input Nama/Poli, Step 2: Pilih Bahasa, Step 3: Tutoring
 let studentProfile = { name: "", poly: "", language: "" };
