@@ -1,12 +1,16 @@
-// 1. URL Cloudflare Worker Anda
-const WORKER_URL = "https://silent-cake-5518.fira-ukm.workers.dev"; 
+// 1. URL Worker Sebenar Anda
+const WORKER_URL = "https://silent-cake-5518.fira-ukm.workers.dev";
 
-// 2. Elemen UI berdasarkan HTML sebenar anda
-const chatForm = document.getElementById("chat-form");
-const userInput = document.getElementById("user-input");
-const chatMessages = document.getElementById("chat-messages");
+// Fungsi khas untuk mencari ruang borak secara automatik
+function getChatContainer() {
+  return document.getElementById("chat-messages") || 
+         document.getElementById("chat-box") || 
+         document.querySelector(".chat-messages") || 
+         document.querySelector(".chat-box") ||
+         document.body;
+}
 
-// 3. Fungsi panggil Madam Fi melalui Worker
+// 2. Fungsi panggil Madam Fi dari Cloudflare Worker
 async function sendMessageToMadamFi(promptText) {
   try {
     const response = await fetch(WORKER_URL, {
@@ -26,16 +30,17 @@ async function sendMessageToMadamFi(promptText) {
       return "Oops! Ada masalah teknikal pada laluan pelayan.";
     }
 
-    return data.candidates[0].content.parts[0].text;
+    return data.candidates[0]?.content?.parts[0]?.text || "Maaf, tiada respon diterima dari server.";
   } catch (error) {
     console.error("Fetch Error:", error);
     return "Oops! Madam Fi tengah sibuk sikit. Cuba refresh atau tanya lagi sekali ya!";
   }
 }
 
-// 4. Fungsi papar mesej pada skrin
+// 3. Fungsi paparkan mesej ke skrin
 function appendMessage(sender, text) {
-  if (!chatMessages) return;
+  const container = getChatContainer();
+  if (!container) return;
 
   const msgDiv = document.createElement("div");
   msgDiv.className = `message ${sender}-message`;
@@ -59,38 +64,50 @@ function appendMessage(sender, text) {
     msgDiv.innerHTML = `<strong>Madam Fi:</strong> ${text}`;
   }
 
-  chatMessages.appendChild(msgDiv);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  container.appendChild(msgDiv);
+  container.scrollTop = container.scrollHeight;
 }
 
-// 5. Acara Hantar Form
-if (chatForm) {
-  chatForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const text = userInput.value.trim();
-    if (!text) return;
+// 4. Pastikan HTML selesai dimuatkan sebelum event listener diikat
+document.addEventListener("DOMContentLoaded", () => {
+  const chatForm = document.getElementById("chat-form") || document.querySelector("form");
+  const userInput = document.getElementById("user-input") || document.querySelector("input[type='text']") || document.querySelector("input");
 
-    // Papar mesej pengguna
-    appendMessage("user", text);
-    userInput.value = "";
+  if (chatForm) {
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!userInput) return;
 
-    // Indikator loading
-    const loadingDiv = document.createElement("div");
-    loadingDiv.id = "loading-indicator";
-    loadingDiv.style.fontStyle = "italic";
-    loadingDiv.style.color = "#6c757d";
-    loadingDiv.style.margin = "8px 0";
-    loadingDiv.innerText = "Madam Fi sedang memikirkan jawapan...";
-    chatMessages.appendChild(loadingDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+      const text = userInput.value.trim();
+      if (!text) return;
 
-    // Ambil respon AI
-    const reply = await sendMessageToMadamFi(text);
+      const container = getChatContainer();
 
-    // Padam indikator loading & papar jawapan
-    const indicator = document.getElementById("loading-indicator");
-    if (indicator) indicator.remove();
+      // Papar mesej pengguna
+      appendMessage("user", text);
+      userInput.value = "";
 
-    appendMessage("bot", reply);
-  });
-}
+      // Papar indikator loading
+      const loadingDiv = document.createElement("div");
+      loadingDiv.id = "loading-indicator";
+      loadingDiv.style.fontStyle = "italic";
+      loadingDiv.style.color = "#6c757d";
+      loadingDiv.style.margin = "8px 0";
+      loadingDiv.innerText = "Madam Fi sedang memikirkan jawapan...";
+      
+      if (container) {
+        container.appendChild(loadingDiv);
+        container.scrollTop = container.scrollHeight;
+      }
+
+      // Ambil respon AI
+      const reply = await sendMessageToMadamFi(text);
+
+      // Padam indikator loading & papar jawapan
+      const indicator = document.getElementById("loading-indicator");
+      if (indicator) indicator.remove();
+
+      appendMessage("bot", reply);
+    });
+  }
+});
