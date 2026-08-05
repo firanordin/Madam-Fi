@@ -3,61 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Madam Fi - DBM30263 Tutor</title>
+  <title>Madam Fi - DBM30263</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Modal / Kad Onboarding (Muncul di Awal Sesi) -->
-  <div id="onboarding-overlay">
-    <div class="onboarding-card">
-      <h2>Selamat Datang / Welcome! 🎓</h2>
-      <p>Sila lengkapkan maklumat anda sebelum memulakan sesi bersama <strong>Madam Fi</strong>.</p>
-      
-      <form id="onboarding-form">
-        <!-- Input Nama (Short Answer) -->
-        <div class="form-group">
-          <label for="student-name-input">Nama Pelajar / Student Name:</label>
-          <input type="text" id="student-name-input" placeholder="Contoh: Muhammad Ali bin Ahmad" required>
-        </div>
-
-        <!-- Input Politeknik (Short Answer / Text) -->
-        <div class="form-group">
-          <label for="student-poly-input">Politeknik:</label>
-          <input type="text" id="student-poly-input" placeholder="Contoh: Politeknik Ungku Omar (PUO)" required>
-        </div>
-
-        <!-- Dropdown Pilihan Bahasa -->
-        <div class="form-group">
-          <label for="language-select">Bahasa Pilihan / Preferred Language:</label>
-          <select id="language-select" required>
-            <option value="" disabled selected>-- Pilih Bahasa / Select Language --</option>
-            <option value="Bahasa Melayu">Bahasa Melayu</option>
-            <option value="English">English</option>
-          </select>
-        </div>
-
-        <button type="submit" id="start-btn">Mula Belajar / Start Learning 🚀</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Ruang Utama Chat (Hanya aktif selepas form dihantar) -->
   <div id="chat-container">
+    <!-- Header Chatbot dengan Profil Pelajar Dinamik -->
     <div id="chat-header">
-      <h2>Madam Fi (DBM30263)</h2>
+      <div class="header-info">
+        <h2>Madam Fi</h2>
+        <p>Learning Assistant - DBM30263</p>
+      </div>
+      <!-- Badge Nama Pelajar yang akan dikemaskini secara automatik -->
       <div id="student-badge" style="display: none;">
-        👤 <span id="display-name"></span> | 🏫 <span id="display-poly"></span>
+        👤 <span id="student-name-display"></span> (<span id="student-poly-display"></span>)
       </div>
     </div>
 
+    <!-- Tetingkap Mesej Chatbot -->
     <div id="chat-messages">
-      <!-- Mesej akan dipaparkan di sini -->
+      <!-- Mesej akan muncul di sini -->
     </div>
 
+    <!-- Bahagian Input Chatbot -->
     <div id="chat-input-area">
-      <input type="text" id="user-input" placeholder="Taip soalan anda di sini..." disabled>
-      <button id="send-btn" disabled>Hantar</button>
+      <!-- Dropdown Pilihan Bahasa (Disembunyikan secara asal, akan muncul pada Step 2) -->
+      <div id="language-dropdown-container" style="display: none;">
+        <label for="language-select"> Pilih Bahasa / Select Language:</label>
+        <select id="language-select">
+          <option value="" disabled selected>-- Pilih / Select --</option>
+          <option value="Bahasa Melayu">Bahasa Melayu</option>
+          <option value="English">English</option>
+        </select>
+      </div>
+
+      <!-- Ruang Taip Mesej Pelajar -->
+      <div class="input-row">
+        <input type="text" id="user-input" placeholder="Taip jawapan anda di sini..." />
+        <button id="send-btn">Hantar</button>
+      </div>
     </div>
   </div>
 
