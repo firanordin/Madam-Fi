@@ -4,7 +4,7 @@ const chatForm = document.getElementById('chat-form');
 const userInput = document.getElementById('user-input');
 
 // ⚠️ API Configuration (Replace with your actual key or handle via secure backend)
-const GEMINI_API_KEY = "AQ.Ab8RN6LiD71gYqz6WNFvTO75uSfEAK9J2R40vJ1UMYOrh9lTmQ"; 
+const GEMINI_API_KEY = "AQ.Ab8RN6KSHBSY6SPll_CuIb-qCpTnEaslAzzh_p5mheilQAyQxA"; 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 // System Instruction to force Socratic behavior
