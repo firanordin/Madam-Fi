@@ -4,48 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Madam Fi - DBM30263</title>
-  <link rel="stylesheet" href="style.css">
+  
+  <link rel="stylesheet" href="style.css?v=4.0">
+  
+  <!-- Pustaka Render Math (KaTeX) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 </head>
 <body>
 
   <div id="chat-container">
-    <!-- Header Chatbot dengan Profil Pelajar Dinamik -->
     <div id="chat-header">
       <div class="header-info">
-        <h2>Madam Fi</h2>
+        <h2>Madam Fi 🎓</h2>
         <p>Learning Assistant - DBM30263</p>
       </div>
-      <!-- Badge Nama Pelajar yang akan dikemaskini secara automatik -->
       <div id="student-badge" style="display: none;">
-        👤 <span id="student-name-display"></span> (<span id="student-poly-display"></span>)
+        👤 <span id="student-name-display"></span>
       </div>
     </div>
 
-    <!-- Tetingkap Mesej Chatbot -->
-    <div id="chat-messages">
-      <!-- Mesej akan muncul di sini -->
-    </div>
+    <div id="chat-messages"></div>
 
-    <!-- Bahagian Input Chatbot -->
     <div id="chat-input-area">
-      <!-- Dropdown Pilihan Bahasa (Disembunyikan secara asal, akan muncul pada Step 2) -->
       <div id="language-dropdown-container" style="display: none;">
-        <label for="language-select"> Pilih Bahasa / Select Language:</label>
+        <label for="language-select">🌐 Pilih Bahasa / Select Language:</label>
         <select id="language-select">
-          <option value="" disabled selected>-- Pilih / Select --</option>
+          <option value="" disabled selected>-- Klik Untuk Pilih / Click to Select --</option>
           <option value="Bahasa Melayu">Bahasa Melayu</option>
           <option value="English">English</option>
         </select>
       </div>
 
-      <!-- Ruang Taip Mesej Pelajar -->
       <div class="input-row">
-        <input type="text" id="user-input" placeholder="Taip jawapan anda di sini..." />
+        <input type="text" id="user-input" placeholder="Taip jawapan anda di sini..." autocomplete="off" />
         <button id="send-btn">Hantar</button>
       </div>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=4.0"></script>
 </body>
 </html>
