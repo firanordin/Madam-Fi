@@ -3,47 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Madam Fi - DBM30263</title>
-  
-  <link rel="stylesheet" href="style.css?v=4.0">
-  
-  <!-- Pustaka Render Math (KaTeX) -->
+  <title>STATPHEA — Statistics & Probability Mastery</title>
+  <link rel="stylesheet" href="style.css?v=5.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 </head>
 <body>
-
-  <div id="chat-container">
-    <div id="chat-header">
-      <div class="header-info">
-        <h2>Madam Fi 🎓</h2>
-        <p>Learning Assistant - DBM30263</p>
+  <main class="app-shell">
+    <header class="app-header">
+      <div>
+        <div class="brand">STATPHEA</div>
+        <p>Statistics &amp; Probability • AI-Guided Learning</p>
       </div>
-      <div id="student-badge" style="display: none;">
-        👤 <span id="student-name-display"></span>
+      <div class="badge">🎓 Diploma / TVET</div>
+    </header>
+
+    <nav class="tabs" aria-label="Main navigation">
+      <button class="tab active" data-view="coach">🤖 AI Coach</button>
+      <button class="tab" data-view="notes">📚 Notes</button>
+      <button class="tab" data-view="practice">📝 Practice</button>
+      <button class="tab" data-view="final">🎯 Final</button>
+    </nav>
+
+    <section id="coach-view" class="view active">
+      <div class="intro-card">
+        <span class="eyebrow">Socratic • Scaffolded • Exam-focused</span>
+        <h1>Don't just get the answer. Learn how to get the marks.</h1>
+        <p>STATPHEA guides your thinking step-by-step. It should not reveal the full solution immediately.</p>
       </div>
-    </div>
 
-    <div id="chat-messages"></div>
-
-    <div id="chat-input-area">
-      <div id="language-dropdown-container" style="display: none;">
-        <label for="language-select">🌐 Pilih Bahasa / Select Language:</label>
-        <select id="language-select">
-          <option value="" disabled selected>-- Klik Untuk Pilih / Click to Select --</option>
-          <option value="Bahasa Melayu">Bahasa Melayu</option>
-          <option value="English">English</option>
+      <div class="topic-row">
+        <label for="topic-select">Current focus</label>
+        <select id="topic-select">
+          <option value="probability-distribution">Probability Distribution</option>
+          <option value="probability">Probability</option>
+          <option value="statistics">Statistics</option>
         </select>
       </div>
 
-      <div class="input-row">
-        <input type="text" id="user-input" placeholder="Taip jawapan anda di sini..." autocomplete="off" />
-        <button id="send-btn">Hantar</button>
+      <div id="chat-messages" class="chat-messages" aria-live="polite">
+        <div class="message bot"><strong>STATPHEA Coach 👋</strong><br>Let's work through the question together. Start by telling me what you know from the question.</div>
       </div>
-    </div>
-  </div>
 
-  <script src="script.js?v=4.0"></script>
+      <div class="input-area">
+        <textarea id="user-input" rows="3" placeholder="Type your answer, working, or question here..."></textarea>
+        <div class="input-actions">
+          <button id="clear-btn" class="secondary">Clear</button>
+          <button id="send-btn" class="primary">Continue →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="notes-view" class="view">
+      <div class="section-heading">
+        <span class="eyebrow">Lecturer-guided content</span>
+        <h2>📚 Notes</h2>
+        <p>Your lecturer's notes, mind maps and answer schemes will become the authoritative learning reference.</p>
+      </div>
+      <div class="note-grid">
+        <article class="note-card featured">
+          <span>CHAPTER 2</span>
+          <h3>Probability Distribution</h3>
+          <p>Core concepts, formulas, worked examples and exam reminders.</p>
+          <button class="primary note-btn" data-note="probability-distribution">Open Notes</button>
+        </article>
+        <article class="note-card">
+          <span>QUICK REVISION</span>
+          <h3>Formula Bank</h3>
+          <p>Key formulas and conditions for quick final-exam revision.</p>
+          <button class="secondary note-btn" data-note="formula">Coming next</button>
+        </article>
+        <article class="note-card">
+          <span>EXAM SKILLS</span>
+          <h3>Common Mistakes</h3>
+          <p>Misconceptions and error patterns identified from practice.</p>
+          <button class="secondary note-btn" data-note="mistakes">Coming next</button>
+        </article>
+      </div>
+      <div id="note-content" class="content-panel">
+        <h3>Probability Distribution Notes</h3>
+        <p><strong>Content will be populated from your lecturer-provided notes and mind map.</strong></p>
+        <ol>
+          <li>Concept / definition</li>
+          <li>Identify the type of random variable</li>
+          <li>Select the correct distribution / formula</li>
+          <li>Substitute values carefully</li>
+          <li>Interpret the answer in context</li>
+        </ol>
+        <div class="notice">📌 We will replace this placeholder with your actual notes and answer scheme when you provide them.</div>
+      </div>
+    </section>
+
+    <section id="practice-view" class="view">
+      <div class="section-heading">
+        <span class="eyebrow">Guided practice</span>
+        <h2>📝 Practice</h2>
+        <p>Attempt first. STATPHEA guides the next step instead of giving away the solution.</p>
+      </div>
+      <div class="practice-card">
+        <label for="practice-question">Your question</label>
+        <textarea id="practice-question" rows="6" placeholder="Paste an exam-style Probability Distribution question here..."></textarea>
+        <button id="start-practice" class="primary">Start Guided Practice →</button>
+      </div>
+    </section>
+
+    <section id="final-view" class="view">
+      <div class="section-heading">
+        <span class="eyebrow">Exam readiness</span>
+        <h2>🎯 Final</h2>
+        <p>Build independent answering skills using the lecturer's marking scheme.</p>
+      </div>
+      <div class="readiness-grid">
+        <div class="metric"><span>Concept</span><strong>—</strong><small>Not assessed yet</small></div>
+        <div class="metric"><span>Procedure</span><strong>—</strong><small>Not assessed yet</small></div>
+        <div class="metric"><span>Calculation</span><strong>—</strong><small>Not assessed yet</small></div>
+        <div class="metric"><span>Interpretation</span><strong>—</strong><small>Not assessed yet</small></div>
+      </div>
+      <div class="notice">📊 Lecturer Dashboard and research analytics will be added after the student learning flow is validated.</div>
+    </section>
+  </main>
+  <script src="script.js?v=5.0"></script>
 </body>
 </html>
