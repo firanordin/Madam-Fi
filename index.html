@@ -4,67 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>STATPHEA</title>
-  <link rel="stylesheet" href="style.css?v=5.1">
+  <link rel="stylesheet" href="style.css?v=5.2">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 </head>
 <body>
   <main class="app-shell">
-    <header class="app-header">
-      <div class="brand">STATPHEA</div>
-    </header>
+    <header class="app-header"><div class="brand">STATPHEA</div></header>
 
-    <nav class="tabs" aria-label="Main navigation">
-      <button class="tab active" data-view="coach">🤖 AI Coach</button>
-      <button class="tab" data-view="notes">📚 Notes</button>
-      <button class="tab" data-view="practice">📝 Practice</button>
-      <button class="tab" data-view="final">🎯 Final</button>
-    </nav>
-
-    <section id="coach-view" class="view active">
-      <div class="intro-card">
-        <span class="eyebrow">Socratic • Scaffolded • Exam-focused</span>
-        <h1>STATPHEA</h1>
-        <p>Learn step-by-step. The AI guides your thinking instead of immediately giving the full answer.</p>
-      </div>
-      <div class="topic-row">
-        <label for="topic-select">Current focus</label>
-        <select id="topic-select">
-          <option value="probability-distribution">Probability Distribution</option>
-          <option value="probability">Probability</option>
-          <option value="statistics">Statistics</option>
-        </select>
-      </div>
-      <div id="chat-messages" class="chat-messages" aria-live="polite">
-        <div class="message bot"><strong>STATPHEA 👋</strong><br>Let's work through the question together. Start by telling me what you know from the question.</div>
-      </div>
-      <div class="input-area">
-        <textarea id="user-input" rows="3" placeholder="Type your answer, working, or question here..."></textarea>
-        <div class="input-actions">
-          <label class="upload-btn" for="file-upload">📎 Upload</label>
-          <input id="file-upload" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" hidden>
-          <span id="file-name" class="file-name">No file selected</span>
-          <button id="clear-btn" class="secondary">Clear</button>
-          <button id="send-btn" class="primary">Continue →</button>
+    <section id="profile-view" class="view active profile-view">
+      <div class="intro-card profile-card">
+        <span class="eyebrow">Student Profile</span>
+        <h1>Welcome to STATPHEA 👋</h1>
+        <p>Enter your details before starting so your learning progress can be identified by student and institution.</p>
+        <div class="profile-form">
+          <label for="student-name">Student name</label>
+          <input id="student-name" type="text" placeholder="e.g. Nur Aisyah" autocomplete="name">
+          <label for="poly-name">Polytechnic / Institution</label>
+          <input id="poly-name" type="text" placeholder="e.g. Politeknik Ungku Omar" autocomplete="organization">
+          <label for="programme">Programme <span class="optional">(optional)</span></label>
+          <input id="programme" type="text" placeholder="e.g. Diploma in Business Studies">
+          <button id="start-app" class="primary">Start STATPHEA →</button>
         </div>
       </div>
     </section>
 
-    <section id="notes-view" class="view">
-      <div class="section-heading"><span class="eyebrow">Lecturer-guided content</span><h2>📚 Notes</h2><p>Your lecturer's notes, mind map and answer scheme will be the learning reference.</p></div>
-      <div class="note-grid">
-        <article class="note-card featured"><span>CHAPTER 2</span><h3>Probability Distribution</h3><p>Core concepts, formulas, examples and exam reminders.</p><button class="primary note-btn">Open Notes</button></article>
-        <article class="note-card"><span>QUICK REVISION</span><h3>Formula Bank</h3><p>Key formulas and conditions for final-exam revision.</p><button class="secondary note-btn">Coming next</button></article>
-        <article class="note-card"><span>EXAM SKILLS</span><h3>Common Mistakes</h3><p>Misconceptions and error patterns from practice.</p><button class="secondary note-btn">Coming next</button></article>
-      </div>
-      <div class="content-panel"><h3>Probability Distribution Notes</h3><p><strong>Upload your lecturer notes to populate this section.</strong></p><div class="notice">📌 Your notes, mind map and answer scheme will be added here.</div></div>
-    </section>
+    <div id="app-content" hidden>
+      <nav class="tabs" aria-label="Main navigation">
+        <button class="tab active" data-view="coach">🤖 AI Coach</button>
+        <button class="tab" data-view="notes">📚 Notes</button>
+        <button class="tab" data-view="practice">📝 Practice</button>
+        <button class="tab" data-view="final">🎯 Final</button>
+      </nav>
 
-    <section id="practice-view" class="view"><div class="section-heading"><span class="eyebrow">Guided practice</span><h2>📝 Practice</h2><p>Attempt first. STATPHEA guides the next step.</p></div><div class="practice-card"><label for="practice-question">Your question</label><textarea id="practice-question" rows="6" placeholder="Paste an exam-style question here..."></textarea><button id="start-practice" class="primary">Start Guided Practice →</button></div></section>
+      <section id="coach-view" class="view active">
+        <div class="student-bar"><span id="student-display"></span><button id="edit-profile" class="secondary">Edit profile</button></div>
+        <div class="intro-card"><span class="eyebrow">Socratic • Scaffolded • Exam-focused</span><h1>STATPHEA</h1><p>Learn step-by-step. The AI guides your thinking instead of immediately giving the full answer.</p></div>
+        <div class="topic-row"><label for="topic-select">Current focus</label><select id="topic-select"><option value="probability-distribution">Probability Distribution</option><option value="probability">Probability</option><option value="statistics">Statistics</option></select></div>
+        <div id="chat-messages" class="chat-messages" aria-live="polite"><div class="message bot"><strong>STATPHEA 👋</strong><br>Let's work through the question together. Start by telling me what you know from the question.</div></div>
+        <div class="input-area">
+          <textarea id="user-input" rows="3" placeholder="Type your answer, working, or question here..."></textarea>
+          <div class="input-actions">
+            <label class="upload-btn" for="file-upload">📎 Upload</label>
+            <input id="file-upload" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" hidden>
+            <span id="file-name" class="file-name">No file selected</span>
+            <button id="clear-btn" class="secondary">Clear</button><button id="send-btn" class="primary">Continue →</button>
+          </div>
+        </div>
+      </section>
 
-    <section id="final-view" class="view"><div class="section-heading"><span class="eyebrow">Exam readiness</span><h2>🎯 Final</h2><p>Build independent answering skills using the lecturer's marking scheme.</p></div><div class="readiness-grid"><div class="metric"><span>Concept</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Procedure</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Calculation</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Interpretation</span><strong>—</strong><small>Not assessed yet</small></div></div></section>
+      <section id="notes-view" class="view"><div class="section-heading"><span class="eyebrow">Lecturer-guided content</span><h2>📚 Notes</h2><p>Your lecturer's notes, mind map and answer scheme will be the learning reference.</p></div><div class="note-grid"><article class="note-card featured"><span>CHAPTER 2</span><h3>Probability Distribution</h3><p>Core concepts, formulas, examples and exam reminders.</p><button class="primary note-btn">Open Notes</button></article><article class="note-card"><span>QUICK REVISION</span><h3>Formula Bank</h3><p>Key formulas and conditions for final-exam revision.</p><button class="secondary note-btn">Coming next</button></article><article class="note-card"><span>EXAM SKILLS</span><h3>Common Mistakes</h3><p>Misconceptions and error patterns from practice.</p><button class="secondary note-btn">Coming next</button></article></div><div class="content-panel"><h3>Probability Distribution Notes</h3><p><strong>Upload your lecturer notes to populate this section.</strong></p><div class="notice">📌 Your notes, mind map and answer scheme will be added here.</div></div></section>
+
+      <section id="practice-view" class="view"><div class="section-heading"><span class="eyebrow">Guided practice</span><h2>📝 Practice</h2><p>Attempt first. STATPHEA guides the next step.</p></div><div class="practice-card"><label for="practice-question">Your question</label><textarea id="practice-question" rows="6" placeholder="Paste an exam-style question here..."></textarea><button id="start-practice" class="primary">Start Guided Practice →</button></div></section>
+
+      <section id="final-view" class="view"><div class="section-heading"><span class="eyebrow">Exam readiness</span><h2>🎯 Final</h2><p>Build independent answering skills using the lecturer's marking scheme.</p></div><div class="readiness-grid"><div class="metric"><span>Concept</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Procedure</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Calculation</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Interpretation</span><strong>—</strong><small>Not assessed yet</small></div></div></section>
+    </div>
   </main>
-  <script src="script.js?v=5.1"></script>
+  <script src="script.js?v=5.2"></script>
 </body>
 </html>
