@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STATPHEA — Statistics & Probability Mastery</title>
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <title>STATPHEA</title>
+  <link rel="stylesheet" href="style.css?v=5.1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
@@ -12,11 +12,7 @@
 <body>
   <main class="app-shell">
     <header class="app-header">
-      <div>
-        <div class="brand">STATPHEA</div>
-        <p>Statistics &amp; Probability • AI-Guided Learning</p>
-      </div>
-      <div class="badge">🎓 Diploma / TVET</div>
+      <div class="brand">STATPHEA</div>
     </header>
 
     <nav class="tabs" aria-label="Main navigation">
@@ -29,10 +25,9 @@
     <section id="coach-view" class="view active">
       <div class="intro-card">
         <span class="eyebrow">Socratic • Scaffolded • Exam-focused</span>
-        <h1>Don't just get the answer. Learn how to get the marks.</h1>
-        <p>STATPHEA guides your thinking step-by-step. It should not reveal the full solution immediately.</p>
+        <h1>STATPHEA</h1>
+        <p>Learn step-by-step. The AI guides your thinking instead of immediately giving the full answer.</p>
       </div>
-
       <div class="topic-row">
         <label for="topic-select">Current focus</label>
         <select id="topic-select">
@@ -41,14 +36,15 @@
           <option value="statistics">Statistics</option>
         </select>
       </div>
-
       <div id="chat-messages" class="chat-messages" aria-live="polite">
-        <div class="message bot"><strong>STATPHEA Coach 👋</strong><br>Let's work through the question together. Start by telling me what you know from the question.</div>
+        <div class="message bot"><strong>STATPHEA 👋</strong><br>Let's work through the question together. Start by telling me what you know from the question.</div>
       </div>
-
       <div class="input-area">
         <textarea id="user-input" rows="3" placeholder="Type your answer, working, or question here..."></textarea>
         <div class="input-actions">
+          <label class="upload-btn" for="file-upload">📎 Upload</label>
+          <input id="file-upload" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" hidden>
+          <span id="file-name" class="file-name">No file selected</span>
           <button id="clear-btn" class="secondary">Clear</button>
           <button id="send-btn" class="primary">Continue →</button>
         </div>
@@ -56,73 +52,19 @@
     </section>
 
     <section id="notes-view" class="view">
-      <div class="section-heading">
-        <span class="eyebrow">Lecturer-guided content</span>
-        <h2>📚 Notes</h2>
-        <p>Your lecturer's notes, mind maps and answer schemes will become the authoritative learning reference.</p>
-      </div>
+      <div class="section-heading"><span class="eyebrow">Lecturer-guided content</span><h2>📚 Notes</h2><p>Your lecturer's notes, mind map and answer scheme will be the learning reference.</p></div>
       <div class="note-grid">
-        <article class="note-card featured">
-          <span>CHAPTER 2</span>
-          <h3>Probability Distribution</h3>
-          <p>Core concepts, formulas, worked examples and exam reminders.</p>
-          <button class="primary note-btn" data-note="probability-distribution">Open Notes</button>
-        </article>
-        <article class="note-card">
-          <span>QUICK REVISION</span>
-          <h3>Formula Bank</h3>
-          <p>Key formulas and conditions for quick final-exam revision.</p>
-          <button class="secondary note-btn" data-note="formula">Coming next</button>
-        </article>
-        <article class="note-card">
-          <span>EXAM SKILLS</span>
-          <h3>Common Mistakes</h3>
-          <p>Misconceptions and error patterns identified from practice.</p>
-          <button class="secondary note-btn" data-note="mistakes">Coming next</button>
-        </article>
+        <article class="note-card featured"><span>CHAPTER 2</span><h3>Probability Distribution</h3><p>Core concepts, formulas, examples and exam reminders.</p><button class="primary note-btn">Open Notes</button></article>
+        <article class="note-card"><span>QUICK REVISION</span><h3>Formula Bank</h3><p>Key formulas and conditions for final-exam revision.</p><button class="secondary note-btn">Coming next</button></article>
+        <article class="note-card"><span>EXAM SKILLS</span><h3>Common Mistakes</h3><p>Misconceptions and error patterns from practice.</p><button class="secondary note-btn">Coming next</button></article>
       </div>
-      <div id="note-content" class="content-panel">
-        <h3>Probability Distribution Notes</h3>
-        <p><strong>Content will be populated from your lecturer-provided notes and mind map.</strong></p>
-        <ol>
-          <li>Concept / definition</li>
-          <li>Identify the type of random variable</li>
-          <li>Select the correct distribution / formula</li>
-          <li>Substitute values carefully</li>
-          <li>Interpret the answer in context</li>
-        </ol>
-        <div class="notice">📌 We will replace this placeholder with your actual notes and answer scheme when you provide them.</div>
-      </div>
+      <div class="content-panel"><h3>Probability Distribution Notes</h3><p><strong>Upload your lecturer notes to populate this section.</strong></p><div class="notice">📌 Your notes, mind map and answer scheme will be added here.</div></div>
     </section>
 
-    <section id="practice-view" class="view">
-      <div class="section-heading">
-        <span class="eyebrow">Guided practice</span>
-        <h2>📝 Practice</h2>
-        <p>Attempt first. STATPHEA guides the next step instead of giving away the solution.</p>
-      </div>
-      <div class="practice-card">
-        <label for="practice-question">Your question</label>
-        <textarea id="practice-question" rows="6" placeholder="Paste an exam-style Probability Distribution question here..."></textarea>
-        <button id="start-practice" class="primary">Start Guided Practice →</button>
-      </div>
-    </section>
+    <section id="practice-view" class="view"><div class="section-heading"><span class="eyebrow">Guided practice</span><h2>📝 Practice</h2><p>Attempt first. STATPHEA guides the next step.</p></div><div class="practice-card"><label for="practice-question">Your question</label><textarea id="practice-question" rows="6" placeholder="Paste an exam-style question here..."></textarea><button id="start-practice" class="primary">Start Guided Practice →</button></div></section>
 
-    <section id="final-view" class="view">
-      <div class="section-heading">
-        <span class="eyebrow">Exam readiness</span>
-        <h2>🎯 Final</h2>
-        <p>Build independent answering skills using the lecturer's marking scheme.</p>
-      </div>
-      <div class="readiness-grid">
-        <div class="metric"><span>Concept</span><strong>—</strong><small>Not assessed yet</small></div>
-        <div class="metric"><span>Procedure</span><strong>—</strong><small>Not assessed yet</small></div>
-        <div class="metric"><span>Calculation</span><strong>—</strong><small>Not assessed yet</small></div>
-        <div class="metric"><span>Interpretation</span><strong>—</strong><small>Not assessed yet</small></div>
-      </div>
-      <div class="notice">📊 Lecturer Dashboard and research analytics will be added after the student learning flow is validated.</div>
-    </section>
+    <section id="final-view" class="view"><div class="section-heading"><span class="eyebrow">Exam readiness</span><h2>🎯 Final</h2><p>Build independent answering skills using the lecturer's marking scheme.</p></div><div class="readiness-grid"><div class="metric"><span>Concept</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Procedure</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Calculation</span><strong>—</strong><small>Not assessed yet</small></div><div class="metric"><span>Interpretation</span><strong>—</strong><small>Not assessed yet</small></div></div></section>
   </main>
-  <script src="script.js?v=5.0"></script>
+  <script src="script.js?v=5.1"></script>
 </body>
 </html>
